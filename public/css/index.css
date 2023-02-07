@@ -1,0 +1,276 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  font-family: "Bowlby One SC";
+  font-size: medium;
+}
+
+button, input[type="submit"], input[type="reset"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+body {
+  justify-content: center;
+  background-color: #d2d8ff;
+  color: rgba(0, 0, 0, 0.65);
+  z-index: 100;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(var(--board-column-size), var(--number-size));
+  grid-template-rows: repeat(var(--board-row-size), var(--number-size));
+  gap: var(--number-gap);
+  padding: 0.75vmin;
+  border-top-right-radius: 0.25vmin;
+  border-top-left-radius: 0.25vmin;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+#modal-backdrop {
+  visibility: hidden;
+  display: block;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+}
+
+#modal-container {
+  visibility: hidden;
+  display: flex;
+  opacity: 0;
+  gap: 4vmin;
+  flex-direction: column;
+  background-color: white;
+  margin: 3% auto;
+  padding: 20px;
+  width: 80%;
+  border-radius: 0.25vmax;
+  box-shadow: -0.5vmin 0.5vmin 0.5vmin rgba(0, 0, 0, 0.5);
+  text-align: center;
+  transition-property: opacity;
+  transition: ease-in 150ms;
+}
+
+.help-container {
+  display: grid;
+  grid-template-columns: repeat(5, 3vmin);
+  grid-template-rows: auto;
+  gap: 0.5vmin;
+  justify-content: center;
+}
+
+
+.number {
+  box-sizing: content-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25vmin;
+  aspect-ratio: 1;
+  background-color: white;
+  color: rgba(0, 0, 0, 0.65);
+  cursor: pointer;
+  min-width: 0;
+  overflow: hidden;
+  user-select: none;
+  transition: all 100ms ease-in-out;
+}
+
+button:disabled {
+  background-color: rgba(0, 0, 0, 0.65);
+  color: #d2d8ff;
+  cursor: not-allowed;
+}
+
+.number:focus, .number:hover, .number.selected {
+  background-color: rgb(82, 84, 100);
+  color: white;
+}
+
+.number.tutorial-selected {
+  background-color: yellowgreen;
+  transform: scale(1.2);
+  box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.number:focus, .number.selected {
+  transition: all ease-in-out 100ms;
+  box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.number.pop {
+  animation: pop;
+  animation-duration: 200ms;
+}
+
+.settings {
+  justify-content: center;
+  display: flex;
+  width: 100%;
+  border-bottom-right-radius: 0.25vmin;
+  border-bottom-left-radius: 0.25vmin;
+  padding: 0.5vmin;
+}
+
+#cog {
+  border-radius: 0.25vmin;
+  padding: 2vmin;
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  transition: transform 1000ms;
+}
+
+.reload {
+  transition: transform 200ms;
+}
+
+.reload:hover {
+  transform: scale(1.25);
+}
+
+.reload.spin, #cog.spin {
+  animation-name: spin;
+  transform: scale(1.25);
+  animation-duration: 300ms;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
+
+@media (min-width: 780px) {
+  #board {
+    justify-content: center;
+  }
+
+  #cog {
+    font-size: xx-large;
+  }
+
+  .reload {
+    font-size: x-large;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  #board {
+    display: grid;
+    grid-template-columns: repeat(9, auto);
+    grid-template-rows: repeat(3, auto);
+    gap: 1.5vmin;
+    width: 100%;
+    aspect-ratio: auto;
+    padding: 1.5vmin;
+  }
+
+  .number {
+    font-size: large;
+    padding: 0;
+    border-radius: 0.5vmin;
+    aspect-ratio: 1;
+  }
+
+  .settings {
+    font-size: 7vmin;
+    border-bottom-right-radius: 0.5vmin;
+    border-bottom-left-radius: 0.5vmin;
+    user-select: none;
+  }
+
+  .help-container {
+    grid-template-columns: repeat(5, 5vmin);
+    grid-template-rows: auto;
+    gap: 1vmin;
+    font-size: medium;
+    justify-content: center;
+  }
+}
+
+#close-modal {
+  margin-top: 5vmin;
+  border: solid 0.4vmin #d2d8ff;
+  border-radius: 0.5vmin;
+}
+
+#close-modal:hover {
+  background-color: rgb(82, 84, 100);
+  color: white;
+  transition: all ease-in 150ms;
+}
+
+#close-modal:active {
+  background-color: rgba(0, 0, 0, 0.8);
+  transform: translate(-0.25vmin, 0.25vmin);
+}
+
+.number.shake {
+  -webkit-animation: webkitShake 400ms linear;
+  -moz-animation: moz-shake 400ms;
+  -o-animation: o-shake 400ms;
+  animation: shake 400ms;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0) }
+  25% { transform: translateX(5px) }
+  50% { transform: translateX(-5px) }
+  75% { transform: translateX(5px) }
+  100% { transform: translateX(0) }
+}
+
+@-webkit-keyframes webkitShake {
+  0% { -webkit-transform: translateX(0) }
+  25% { -webkit-transform: translateX(5px) }
+  50% { -webkit-transform: translateX(-5px) }
+  75% { -webkit-transform: translateX(5px) }
+  100% { -webkit-transform: translateX(0) }
+}
+
+@-moz-keyframes moz-shake {
+  0% { -webkit-transform: translateX(0) }
+  25% { -webkit-transform: translateX(5px) }
+  50% { -webkit-transform: translateX(-5px) }
+  75% { -webkit-transform: translateX(5px) }
+  100% { -webkit-transform: translateX(0) }
+}
+
+@-o-keyframes o-shake {
+  0% { -o-transform: translateX(0) }
+  25% { -o-transform: translateX(5px) }
+  50% { -o-transform: translateX(-5px) }
+  75% { -o-transform: translateX(5px) }
+  100% { -o-transform: translateX(0) }
+}
+
+@keyframes spin {
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+    transform:rotate(360deg);
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(2)
+  }
+  100% {
+    transform: scale(1);
+  }
+}

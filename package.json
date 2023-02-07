@@ -1,0 +1,28 @@
+{
+  "name": "npmproject",
+  "version": "1.0.0",
+  "description": "Marleen's project",
+  "main": "app.js",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.33.0",
+    "nodemon": "^2.0.20",
+    "prettier": "2.8.3"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "*.js",
+      "*.css",
+      "*.html"
+    ]
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "Marleen Kirsipuu",
+  "license": "ISC"
+}
