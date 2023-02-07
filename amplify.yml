@@ -5,7 +5,7 @@ frontend:
       commands:
         - npm ci
     build:
-      commands: [npm run]
+      commands: ["npm run"]
   artifacts:
     baseDirectory: /
     files:
