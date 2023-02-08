@@ -37,12 +37,15 @@ body {
 #modal-backdrop {
   visibility: hidden;
   display: block;
+  opacity: 0;
   position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   background-color: rgba(0,0,0,0.5);
+  transition-property: opacity;
+  transition: ease-in 150ms;
 }
 
 #modal-container {
@@ -101,11 +104,12 @@ button:disabled {
 .number.tutorial-selected {
   background-color: yellowgreen;
   transform: scale(1.2);
-  box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: -0.5vmin 0.5vmin 0.5vmin rgba(0, 0, 0, 0.5);
   color: white;
 }
 
 .number:focus, .number.selected {
+  transform: scale(1.2);
   transition: all ease-in-out 100ms;
   box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.5);
   z-index: 10;
@@ -131,7 +135,11 @@ button:disabled {
   position: fixed;
   left: 20px;
   bottom: 20px;
-  transition: transform 1000ms;
+  transition: transform 300ms;
+}
+
+#cog:hover {
+  transform: scale(1.25);
 }
 
 .reload {

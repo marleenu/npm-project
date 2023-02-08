@@ -32,14 +32,19 @@ settingsButton.onclick = async () => {
   settingsButton.classList.add("spin");
   await sleep(300);
   settingsButton.classList.remove("spin");
-  modal.style.opacity = "1";
+  modal.style.display = "flex";
   modal.style.visibility = "visible";
   backdrop.style.visibility = "visible";
+  backdrop.style.display = "block";
+  modal.style.opacity = "1";
+  backdrop.style.opacity = "1";
 };
 
 cancelButton.onclick = async () => {
-  await sleep(150);
   modal.style.opacity = "0";
+  backdrop.style.opacity = "0";
+  await sleep(300);
+  modal.style.display = "none";
   backdrop.style.visibility = "hidden";
-  modal.style.display = "hidden";
+  backdrop.style.display = "none";
 };
