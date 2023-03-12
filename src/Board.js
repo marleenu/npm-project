@@ -92,12 +92,12 @@ export default class Board {
   }
 
   hideFilledRows() {
-    const numberOfRows = Math.ceil(this.#allNumbers.length);
+    const numberOfRows = Math.ceil(this.#allNumbers.length / BOARD_COLUMN_SIZE);
     for (let i = 0; i < numberOfRows; i++) {
       const rowNumbers = this.#allNumbers.filter((number) => number.row === i);
-      const allDisabled = rowNumbers.every(
-        (number) => number.number.disabled === true
-      );
+      const allDisabled =
+        rowNumbers.length === BOARD_COLUMN_SIZE &&
+        rowNumbers.every((number) => number.number.disabled === true);
       if (allDisabled) {
         rowNumbers.forEach((number) => (number.number.style.display = "none"));
       }
@@ -163,6 +163,8 @@ export default class Board {
         this.#selectedNumber.number.classList.remove("pop");
         number.number.disabled = true;
         this.#selectedNumber.number.disabled = true;
+      } else if (sameNumber) {
+        number.number.classList.remove("selected");
       } else {
         number.number.classList.add("shake");
         this.#selectedNumber.number.classList.add("shake");
@@ -190,10 +192,6 @@ export default class Board {
       this.#lastNumber.index
     );
     this.#numbers = [...this.#numbers, ...updatedNumbers];
-  }
-
-  selectedNumber() {
-    return this.#selectedNumber;
   }
 }
 

@@ -1,6 +1,9 @@
-.env
 
 /node_modules/
-*.idea
+
+.idea
+dist
+prod-build
 
 package-lock.json
+

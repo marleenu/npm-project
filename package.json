@@ -1,30 +1,44 @@
 {
-  "name": "npmproject",
+  "name": "npm-project",
   "version": "1.0.0",
   "description": "Marleen's project",
   "main": "app.js",
   "dependencies": {
+    "@babel/core": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^9.1.2",
+    "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "terser-webpack-plugin": "^5.3.7",
+    "webpack": "^5.76.1",
+    "webpack-cli": "^5.0.1",
+    "webpack-node-externals": "^3.0.0"
   },
   "devDependencies": {
-    "dotenv": "^16.0.3",
     "eslint": "^8.33.0",
-    "nodemon": "^2.0.20",
-    "prettier": "2.8.3"
+    "prettier": "2.8.3",
+    "nodemon": "^2.0.20"
   },
   "nodemonConfig": {
     "watch": [
       "*.js",
       "*.css",
-      "*.html"
+      "*.html",
+      "*.ejs"
     ]
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "devStart": "nodemon app.js"
+    "start": "nodemon app.js",
+    "start:dev": "node dist/main.js",
+    "start:prod": "node prod-build/main.js",
+    "build:dev": "webpack --config webpack.development.config.js --mode development",
+    "build:prod": "webpack --config webpack.production.config.js --mode production"
   },
-  "author": "Marleen Kirsipuu",
+  "author": {
+    "name": "Marleen Kirsipuu",
+    "url": "https://github.com/marleenu"
+  },
   "license": "ISC"
 }
