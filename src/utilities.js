@@ -1,7 +1,7 @@
-function timeout(ms) {
+const timeout = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export async function sleep(ms) {
+export const sleep = async (ms) => {
   await timeout(ms);
 }

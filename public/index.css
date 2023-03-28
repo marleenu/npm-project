@@ -21,6 +21,16 @@ body {
   z-index: 100;
 }
 
+canvas {
+  width: 100%;
+  height: 100vh;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
 #board {
   display: grid;
   grid-template-columns: repeat(var(--board-column-size), var(--number-size));
@@ -129,7 +139,27 @@ button:disabled {
   padding: 0.5vmin;
 }
 
-#cog {
+#newgame {
+  width: 10rem;
+  height: 4rem;
+  border-radius: 0.5rem;
+  background-color: #ffde34;
+  text-transform: uppercase;
+  font-size: medium;
+  box-shadow: -0.5vmin 0.5vmin 0.5vmin rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+#newgame:hover {
+  background-color: rgba(0, 0, 0, 0.65);
+  color: #d2d8ff;
+}
+
+#newgame:active {
+  transform: translate(-0.125rem, 0.125rem);
+}
+
+#help {
   border-radius: 0.25vmin;
   padding: 2vmin;
   position: fixed;
@@ -138,19 +168,20 @@ button:disabled {
   transition: transform 300ms;
 }
 
-#cog:hover {
+#help:hover {
   transform: scale(1.25);
 }
 
-.reload {
+#reload {
+  z-index: 10;
   transition: transform 200ms;
 }
 
-.reload:hover {
+#reload:hover {
   transform: scale(1.25);
 }
 
-.reload.spin, #cog.spin {
+#reload.spin, #help.spin {
   animation-name: spin;
   transform: scale(1.25);
   animation-duration: 300ms;
@@ -163,11 +194,11 @@ button:disabled {
     justify-content: center;
   }
 
-  #cog {
+  #help {
     font-size: xx-large;
   }
 
-  .reload {
+  #reload {
     font-size: x-large;
   }
 }

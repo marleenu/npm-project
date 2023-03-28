@@ -1,16 +1,15 @@
-import Number from "./Number.js";
+import Number from "./number.js";
+import { addConfetti, confettiLoop } from "./celebration.js";
 
 let BOARD_COLUMN_SIZE = 9;
 let BOARD_ROW_SIZE = 3;
 const NUMBER_SIZE = 4;
 const NUMBER_GAP = 0.25;
-let initialArray = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 1,
-  9,
-];
+let initialArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 1, 9];
 
 export default class Board {
   #numbers;
+  //TODO emoji theme
   #theme;
 
   constructor(boardElement) {
@@ -18,10 +17,10 @@ export default class Board {
     boardElement.style.setProperty("--board-row-size", BOARD_ROW_SIZE);
     boardElement.style.setProperty("--number-size", `${NUMBER_SIZE}vmin`);
     boardElement.style.setProperty("--number-gap", `${NUMBER_GAP}vmin`);
-    this.#numbers = [];
   }
 
   async init(boardElement) {
+    this.#numbers = [];
     const createdNumbers = await createNumbers(
       boardElement,
       initialArray.length
@@ -102,6 +101,14 @@ export default class Board {
         rowNumbers.forEach((number) => (number.number.style.display = "none"));
       }
     }
+    const gameOver = this.#allNumbers.every((number) => number.number.disabled);
+    if (gameOver) {
+      this.#allNumbers.forEach((number) => (number.number.style.display = "none"))
+      document.getElementById("reload").style.display = "none";
+      document.getElementById("newgame").style.display = "block";
+      document.getElementById("canvas").addEventListener("click", addConfetti);
+      confettiLoop();
+    }
   }
 
   canPair(first, second) {
@@ -159,7 +166,7 @@ export default class Board {
         number.number.classList.add("pop");
         this.#selectedNumber.number.classList.add("pop");
         await sleep(400);
-        number.number.classList.remove("pop");
+        number.number.classList?.remove("pop");
         this.#selectedNumber.number.classList.remove("pop");
         number.number.disabled = true;
         this.#selectedNumber.number.disabled = true;

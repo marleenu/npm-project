@@ -1,13 +1,14 @@
 "use strict";
 import { sleep } from "./utilities.js";
-import Board from "./Board.js";
+import Board from "./board.js";
+import { addConfetti, stopConfetti } from "./celebration.js";
 
 //SET UP BOARD
 const gameBoard = document.getElementById("board");
 
 await sleep(300);
 
-const board = new Board(gameBoard);
+let board = new Board(gameBoard);
 await board.init(gameBoard);
 
 //RELOAD BUTTON ACTION
@@ -19,11 +20,11 @@ const onReloadClickHandler = async () => {
   reloadButton.classList.remove("spin");
 };
 
-const reloadButton = document.querySelector(".reload");
+const reloadButton = document.getElementById("reload");
 reloadButton.onclick = onReloadClickHandler;
 
 //SETTINGS
-const settingsButton = document.getElementById("cog");
+const settingsButton = document.getElementById("help");
 const modal = document.getElementById("modal-container");
 const backdrop = document.getElementById("modal-backdrop");
 const cancelButton = document.getElementById("close-modal");
@@ -48,3 +49,15 @@ cancelButton.onclick = async () => {
   backdrop.style.visibility = "hidden";
   backdrop.style.display = "none";
 };
+
+// NEW GAME
+
+const newGameButton = document.getElementById("newgame");
+
+newGameButton.addEventListener("click", async ()=>{
+  document.getElementById("reload").style.display = "block";
+  document.getElementById("canvas").removeEventListener("click", addConfetti);
+  stopConfetti();
+  newGameButton.style.display = "none";
+  await board.init(gameBoard);
+})
